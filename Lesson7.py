@@ -7,7 +7,6 @@ from PIL import Image
 import matplotlib.pyplot as plt
 from skimage.morphology import disk, erosion, opening, closing
 from skimage.measure import regionprops, label
-import cv2
 
 
 
@@ -29,10 +28,8 @@ def morphology_operations_task(image_path):
 
     kernel = np.ones((5,5), np.uint8)
 
-    eroded_image = cv2.erode(image_array, kernel, iterations=1)
-    dilated_image = cv2.dilate(eroded_image, kernel, iterations=1)
-
-
+    eroded_image = erosion(image_array, kernel, iterations=1)
+    dilated_image = opening(eroded_image, kernel, iterations=1)
 
     return dilated_image, kernel.shape
 
@@ -61,6 +58,9 @@ if __name__ == '__main__':
 
     output_dir = "/Users/farahjabeen/Desktop/XRAY_PROJECT/XRAY_ACTIONS/binary_masks"
     morphology_operations = "/Users/farahjabeen/Desktop/XRAY_PROJECT/XRAY_ACTIONS/morphology_operations"
+    
+    binary_masks_dir = "/Users/farahjabeen/Desktop/XRAY_PROJECT/XRAY_ACTIONS/binary_masks"
+
 
     #output_dir_morphology_erosion = "/Users/farahjabeen/Desktop/XRAY_PROJECT/XRAY_ACTIONS/morphology_operations_erosion"
     #output_dir_morphology_dilation = "/Users/farahjabeen/Desktop/XRAY_PROJECT/XRAY_ACTIONS/morphology_operations_dilation"
@@ -79,9 +79,9 @@ if __name__ == '__main__':
 
     if not os.path.exists(morphology_operations):
         os.makedirs(morphology_operations) 
-    for images in os.listdir(output_dir):
+    for images in os.listdir(binary_masks_dir):
         if images.endswith(".png"):
-            image_path = os.path.join(output_dir, images)
+            image_path = os.path.join(binary_masks_dir, images)
             dilated_image , kernel = morphology_operations_task(image_path)
             save_path = os.path.join(morphology_operations, f"morphology_{images}_{kernel}.png")
             plt.imsave(save_path, dilated_image, cmap='gray')
