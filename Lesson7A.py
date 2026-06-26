@@ -156,3 +156,9 @@ if __name__ == "__main__":
     output_masks = "/Users/farahjabeen/Desktop/XRAY_PROJECT/XRAY_ACTIONS/Final_Clean_Masks"
 
     process_pipeline(input_dir, output_hist, output_masks)
+
+
+
+
+
+

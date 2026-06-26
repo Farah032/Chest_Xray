@@ -2,7 +2,7 @@ import pandas
 import matplotlib.pyplot as plt
 import os
 
-base_path = "/Users/farahjabeen/Desktop/XRAY_PROJECT/data/Data_Entry_2017.csv"
+base_path = "/Users/farahjabeen/Desktop/XRAY_PROJECT/data/NIH/Data_Entry_2017.csv"
 
 df  = pandas.read_csv(base_path)
 '''
@@ -64,3 +64,4 @@ print("\nPlot saved to results/nih_disease_distribution.png")
 
 # Optional: display plot
 plt.show()
+
