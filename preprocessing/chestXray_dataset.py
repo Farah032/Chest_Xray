@@ -5,6 +5,20 @@ from PIL import Image
 from torch.utils.data import Dataset
 from torchvision import transforms
 
+import os
+
+# Detect if running on Kaggle or local Mac
+IS_KAGGLE = os.path.exists('/kaggle')
+
+if IS_KAGGLE:
+    # Kaggle paths - we'll use Kaggle's chest X-ray dataset
+    IMG_DIR = '/kaggle/input/chest-xray-pneumonia/chest_xray/train/NORMAL'
+    CSV_PATH = None  # Kaggle dataset doesn't have this exact CSV
+else:
+    # Local Mac paths
+    IMG_DIR = '/Users/farahjabeen/Desktop/XRAY_PROJECT/data/NIH/images_001/images'
+    CSV_PATH = '/Users/farahjabeen/Desktop/XRAY_PROJECT/data/NIH/Data_Entry_2017.csv'
+
 def encode_labels(label_string, classes):
     encoded = torch.zeros(len(classes), dtype=torch.float32)
     labels = label_string.split("|")
@@ -15,7 +29,12 @@ def encode_labels(label_string, classes):
     return encoded   
 
 class ChestXrayDataset(Dataset):
-    def __init__(self, csv_path, img_dir, classes, transform=None):
+    def __init__(self, csv_path=None, img_dir=None, classes=None, transform=None):
+        if csv_path is None:
+            csv_path = CSV_PATH
+        if img_dir is None:
+            img_dir = IMG_DIR
+
         self.df = pd.read_csv(csv_path)
         self.img_dir = img_dir 
         self.transform = transform
@@ -35,4 +54,3 @@ class ChestXrayDataset(Dataset):
         labels = encode_labels(label, self.classes)
         return image, labels
 
-# That's it. NOTHING else. No dataset creation, no printing.

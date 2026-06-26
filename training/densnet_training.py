@@ -4,7 +4,7 @@ import os
 from PIL import Image 
 from torch.utils.data import Dataset, DataLoader, random_split
 from torchvision import transforms
-from preprocessing.chestXray_dataset import ChestXrayDataset 
+from preprocessing.chestXray_dataset import ChestXrayDataset, IS_KAGGLE, IMG_DIR, CSV_PATH
 import torch.nn as nn
 from torchvision.models import densenet121
 
@@ -15,8 +15,8 @@ if __name__ == "__main__":
 'Nodule', 'Pleural_Thickening', 'Pneumonia', 'Pneumothorax']
     
 
-    img_dir = '/Users/farahjabeen/Desktop/XRAY_PROJECT/data/NIH/images_001/images'
-    csv_path = '/Users/farahjabeen/Desktop/XRAY_PROJECT/data/NIH/Data_Entry_2017.csv'
+    img_dir = IMG_DIR
+    csv_path = CSV_PATH
 
     
     transform = transforms.Compose([
