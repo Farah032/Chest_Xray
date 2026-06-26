@@ -4,7 +4,7 @@ import os
 from PIL import Image 
 from torch.utils.data import Dataset, DataLoader, random_split
 from torchvision import transforms
-from chestXray_dataset import ChestXrayDataset 
+from preprocessing.chestXray_dataset import ChestXrayDataset 
 import torch.nn as nn
 from torchvision.models import densenet121
 
